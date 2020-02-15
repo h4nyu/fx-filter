@@ -1,5 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
+import App from '~/connectors/App';
+import '~/app.scss';
 
 
-render(<div>bbb</div>, document.getElementById('app'));
+
+render(<App/>, document.getElementById('app'));
