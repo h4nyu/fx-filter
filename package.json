@@ -1,0 +1,16 @@
+{
+  "name": "backlog-notifyer",
+  "version": "0.0.0",
+  "description": "hello world!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://xinyuan-yao@bitbucket.org/u658630c/backlog-notifyer.git"
+  },
+  "author": "pei",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/u658630c/backlog-notifyer#readme"
+}
