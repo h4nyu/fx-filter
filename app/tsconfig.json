@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "strict": true,
+    "jsx": "react",
+    "isolatedModules": true,
+    "outDir": "./dist",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "lib": ["dom", "es6" ],
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"],
+      "stories/*": ["stories/*"],
+      "tests/*": ["tests/*"]
+    }
+  },
+  "include": [
+    "src",
+    "stories",
+    "tests"
+  ],
+  "exclude": ["node_modules"]
+}
