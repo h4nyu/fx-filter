@@ -12,5 +12,10 @@
   },
   "author": "pei",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/u658630c/backlog-notifyer#readme"
+  "homepage": "https://bitbucket.org/u658630c/backlog-notifyer#readme",
+  "dependencies": {
+    "react": "^16.12.0",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.6"
+  }
 }
