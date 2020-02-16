@@ -12,7 +12,7 @@ export class BacklogApi {
     this.apiKey = apiKey;
     this.url = url;
   }
-  getStatus = async (projectId:number)  => {
+  getStatus = async (projectId:string)  => {
     const res = await axios.get(`${this.url}/projects/${projectId}/statuses`, {
       params: {
         apiKey: this.apiKey,
@@ -22,7 +22,7 @@ export class BacklogApi {
   }
 
   getIssueCount = async (
-    projectId: number,
+    projectId: string,
     statusIds: number[],
     dueDateUntil: Moment,
   ):Promise<number> =>  {
@@ -38,7 +38,7 @@ export class BacklogApi {
   }
 
   getIssuesOffset = async (
-    projectId: number,
+    projectId: string,
     statusIds: number[],
     dueDateUntil: Moment,
     offset: number,
@@ -64,7 +64,7 @@ export class BacklogApi {
   }
 
   getIssues = async (
-    projectId: number,
+    projectId: string,
     statusIds: number[],
     dueDateUntil: Moment,
   ) => {
@@ -90,7 +90,6 @@ export class BacklogApi {
       })
     });
     let results = await Promise.all(futs);
-    console.log(results)
     results = results.map((res:any) => {
       return res.data.map((x:any) => ({ ...x, dueDate: moment(x.dueDate) }))
     });
