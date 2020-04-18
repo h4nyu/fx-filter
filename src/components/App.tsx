@@ -7,12 +7,13 @@ import {toNumber } from 'lodash';
 interface IProps{
   apiKey: string;
   url: string;
-  projectId: string;
+  accountId: string;
   duration: number;
   issues: any[];
+  CurrencyPairList: React.ComponentType<{}>;
   onKeyInput: (value:string) => void;
   onUrlInput: (value:string) => void;
-  onProjectIdInput: (value:string) => void;
+  onAccountIdInput: (value:string) => void;
   onDurationInput: (value:number) => void;
   onSubmit: () => void;
 }
@@ -28,24 +29,24 @@ const Component = (
   const {
     apiKey,
     url,
-    projectId,
+    accountId,
     duration,
     issues,
     onKeyInput, 
     onUrlInput,
     onDurationInput,
-    onProjectIdInput,
+    onAccountIdInput,
     onSubmit,
-
+    CurrencyPairList,
   } = props;
   return (
     <div>
       <input className="input is-primary" type="text" placeholder="Backlog Url" onChange={(e) => onUrlInput(e.target.value)} value={url}/>
       <input className="input is-primary" type="text" placeholder="Api Key" onChange={(e) => onKeyInput(e.target.value)} value={apiKey}/>
-      <input className="input is-primary" type="text" placeholder="Project Id" onChange={(e) => onProjectIdInput(e.target.value)} value={projectId}/>
-      <input className="input is-primary" type="text" placeholder="Duration" onChange={(e) => onDurationInput(toNumber(e.target.value))} value={duration}/>
+      <input className="input is-primary" type="text" placeholder="Project Id" onChange={(e) => onAccountIdInput(e.target.value)} value={accountId}/>
       <div className="button" onClick={() => onSubmit()}> 検索 </div>
       <div> 件数{issues.length} </div>
+      <CurrencyPairList/>
 
       <table className="table">
         <tr>

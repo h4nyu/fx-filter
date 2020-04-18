@@ -1,98 +1,56 @@
-import axios from 'axios';
+import axios, {AxiosInstance} from 'axios';
 import moment, {Moment} from "moment";
-import {range, floor, reduce, toArray} from 'lodash';
+import {range, floor, reduce, toArray, first} from 'lodash';
+import {OandaAccount, Instrument, Granularity, Candle, CurrencyPair} from '~/entities'
 
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
-export class BacklogApi {
-  apiKey: string;
-  url: string; // https://xx.backlog.jp/api/v2
-  constructor(apiKey: string, url: string) {
-    this.apiKey = apiKey;
-    this.url = url;
-  }
-  getStatus = async (projectId:string)  => {
-    const res = await axios.get(`${this.url}/projects/${projectId}/statuses`, {
-      params: {
-        apiKey: this.apiKey,
-      },
-    });
-    return res.data
-  }
-
-  getIssueCount = async (
-    projectId: string,
-    statusIds: number[],
-    dueDateUntil: Moment,
-  ):Promise<number> =>  {
-    const res = await axios.get(`${this.url}/issues/count`, {
-      params: {
-        apiKey: this.apiKey,
-        projectId: [projectId],
-        statusId: statusIds,
-        dueDateUntil: dueDateUntil.format(DATE_FORMAT),
-      },
+export class OandaApi {
+  axios: AxiosInstance
+  constructor(token: string, url: string) {
+    this.axios = axios.create({
+      baseURL: url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
     })
-    return res.data.count;
   }
 
-  getIssuesOffset = async (
-    projectId: string,
-    statusIds: number[],
-    dueDateUntil: Moment,
-    offset: number,
-  ) => {
-    const res = await axios.get(`${this.url}/issues`, {
-      params: {
-        apiKey: this.apiKey,
-        projectId: [projectId],
-        dueDateUntil: dueDateUntil.format(DATE_FORMAT),
-        statusId: statusIds,
-        count:100,
-        sort: "dueDate",
-        order: "desc",
-        offset: offset,
-      },
-    });
-    return res.data.map((x:any) => {
-      return {
-        ...x,
-        dueDate: moment(x.dueDate),
+  getAccounts = async ()  => {
+    const res = await this.axios.get(`/v3/accounts`);
+    const data = res.data as {accounts:OandaAccount[]};
+    return first(data.accounts)
+  }
+  getInstruments = async (
+    accountId:string,
+  )  => {
+    const res = await this.axios.get(`/v3/accounts/${accountId}/instruments`);
+    const data = res.data as {instruments:Instrument[]};
+    return data.instruments
+  }
+
+  getCandels = async (
+    count:number,
+    granularity: Granularity,
+    currencyPair: CurrencyPair,
+  ):Promise<Candle[]> => {
+    const res = await this.axios.get(`/v3/instruments/${currencyPair}/candles`, {
+      params:{
+        granularity,
       }
     });
-  }
-
-  getIssues = async (
-    projectId: string,
-    statusIds: number[],
-    dueDateUntil: Moment,
-  ) => {
-    const count =  await this.getIssueCount(
-      projectId,
-      statusIds,
-      dueDateUntil,
-    )
-    const offset = 100;
-    const offsets = range(0, count, offset);
-    const futs = offsets.map(x => {
-      return axios.get(`${this.url}/issues`, {
-        params: {
-          apiKey: this.apiKey,
-          projectId: [projectId],
-          dueDateUntil: dueDateUntil.format(DATE_FORMAT),
-          statusId: statusIds,
-          count:100,
-          sort: "dueDate",
-          order: "desc",
-          offset: x
-        },
-      })
-    });
-    let results = await Promise.all(futs);
-    results = results.map((res:any) => {
-      return res.data.map((x:any) => ({ ...x, dueDate: moment(x.dueDate) }))
-    });
-    return toArray(reduce(results, (x:any, y:any) => x.concat(y)));
+    const data = res.data as {candles:any[]}
+    return data.candles.map(x => ({
+      time: moment(x.time),
+      volume: x.volume,
+      mid: {
+        o: parseInt(x.mid.o),
+        c: parseInt(x.mid.c),
+        h: parseInt(x.mid.h),
+        l: parseInt(x.mid.l),
+      }
+    }))
   }
 }

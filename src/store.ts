@@ -3,25 +3,24 @@ import {
   action,
 } from 'mobx';
 import {sortBy, filter, toNumber, toString} from 'lodash';
-import {BacklogApi} from '~/api';
+import {OandaApi} from '~/api';
+import {Instruments} from '~/entities';
+import {Map } from 'immutable'
 import  'moment-business-days'
 import moment, {Moment} from "moment";
 
 export class AppStore {
-  @observable apiKey: string = "";
-  @observable url: string = "https://a-nfc.backlog.com/api/v2";
-  @observable projectId: string = "";
+  @observable apiKey: string = "69c0bef088a04d1c592365d9140a5ebe-18b94723790177e9d42e9116916727ef";
+  @observable url: string = "https://api-fxpractice.oanda.com";
+  @observable accountId: string = "mp816178";
   @observable duration: number = 5;
   @observable issues: any[] = [];
+  @observable instruments: Instruments = [];
   constructor() {
     const apiKey = localStorage.getItem('apiKey');
     if(apiKey !== null) {this.apiKey = apiKey; }
     const url = localStorage.getItem('url');
     if(url !== null) {this.url = url; }
-    const projectId = localStorage.getItem('projectId');
-    if(projectId !== null) {this.projectId = projectId; }
-    const duration = localStorage.getItem('duration');
-    if(duration !== null) {this.duration = toNumber(duration); }
   }
   @action setApiKey = (value: string) => {
     this.apiKey = value;
@@ -33,8 +32,8 @@ export class AppStore {
     localStorage.setItem('url', value);
   }
 
-  @action setProjectId = (value: string) => { 
-    this.projectId = value
+  @action setAccountId = (value: string) => { 
+    this.accountId = value
     localStorage.setItem('projectId', value);
   }
 
@@ -44,22 +43,21 @@ export class AppStore {
   }
 
   @action submit = async () => { 
-    const api = new BacklogApi(
+    const api = new OandaApi(
       this.apiKey,
-      this.url
+      this.url,
     )
-    let end = moment().businessAdd(this.duration)
-    let statuses = await api.getStatus(this.projectId);
-    statuses = filter(statuses, (x:any) => x.name !== "完了");
-    const statusIds = statuses.map((x:any) => x.id);
-    let issues = await api.getIssues(
-      this.projectId,
-      statusIds,
-      end
-    );
-    issues = sortBy(issues, (x:any) => x.dueDate);
-    issues = sortBy(issues, (x:any) => x.assignee.name);
-    this.issues = issues;
+    const res = await api.getAccounts();
+    if (res === undefined){return}
+
+    this.setAccountId(res.id)
+    const instruments = await api.getInstruments(this.accountId);
+    if (instruments === undefined){return}
+    this.instruments = instruments;
+
+    const candles = await api.getCandels(10, "M5", "EUR_USD")
+    if (candles === undefined){return}
+    console.log(candles)
   }
 }
 
