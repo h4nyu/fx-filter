@@ -2,19 +2,7 @@ version: '3.7'
 
 services:
   app: 
-    build : 
-      context: ./app
+    build : .
     volumes: 
-      - ./app:/srv
+      - ./:/srv
     command: yarn watch
-
-  web:
-    build : 
-      context: ./web
-    volumes:
-      - ./app/dist:/public/
-    depends_on:
-      - app
-    ports:
-      - "${WEB_PORT}:80"
-
