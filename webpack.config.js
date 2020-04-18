@@ -9,6 +9,7 @@ module.exports = {
   entry: './src/index.tsx',
   devServer: {
     host: "0.0.0.0",
+    disableHostCheck: true,
     port: port
   },
   plugins: [
