@@ -1,6 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const path = require('path');
-
+const port = parseInt(process.env.PORT)
 module.exports = {
   watchOptions: {
     aggregateTimeout: 600,
@@ -9,6 +9,7 @@ module.exports = {
   entry: './src/index.tsx',
   devServer: {
     host: "0.0.0.0",
+    port: port
   },
   plugins: [
     new HtmlWebPackPlugin({

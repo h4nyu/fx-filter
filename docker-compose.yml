@@ -5,4 +5,8 @@ services:
     build : .
     volumes: 
       - ./:/srv
-    command: yarn watch
+    command: yarn start
+    environment:
+      - "PORT=$PORT"
+    ports:
+      - "$PORT:$PORT"
