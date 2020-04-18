@@ -10,3 +10,10 @@ services:
       - "PORT=$PORT"
     ports:
       - "$PORT:$PORT"
+  storybook:
+    build : .
+    volumes:
+      - ./:/srv
+    command: yarn storybook
+    ports:
+      - "${STORYBOOK_PORT}:9001"

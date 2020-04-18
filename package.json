@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode development --debug --progress",
     "watch": "webpack --mode development --debug --progress --watch",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+     "storybook": "start-storybook -p 9001 -c ./.storybook --ci"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,9 @@
     "typescript": "^3.7.5",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.10.3",
+     "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addon-knobs": "^5.2.5",
+    "@storybook/react": "^5.1.8"
   }
 }
