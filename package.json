@@ -1,5 +1,5 @@
 {
-  "name": "backlog-notifyer",
+  "name": "fx-filter",
   "version": "0.0.0",
   "description": "hello world!",
   "main": "index.js",
@@ -10,11 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://xinyuan-yao@bitbucket.org/u658630c/backlog-notifyer.git"
+    "url": "git+https://github.com/h4nyu/fx-filter"
   },
   "author": "pei",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/u658630c/backlog-notifyer#readme",
   "dependencies": {
     "@material-ui/core": "^4.9.2",
     "@types/jest": "^25.1.2",
