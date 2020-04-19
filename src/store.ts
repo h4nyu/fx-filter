@@ -16,7 +16,7 @@ export class AppStore {
   @observable fromDate:Moment = moment();
   @observable toDate:Moment = moment();
   @observable granularity:Granularity = Granularity.D;
-  @observable currencyPairs: CurrencyPair[] = [CurrencyPair.USD_JPY, CurrencyPair.EUR_JPY];
+  @observable currencyPairs: CurrencyPair[] = [CurrencyPair.USD_JPY];
   @observable instruments: Instruments = [];
   @observable segments:Segments = Map();
   constructor() {
