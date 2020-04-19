@@ -7,6 +7,6 @@ import { action } from '@storybook/addon-actions';
 
 storiesOf('CurrencyPair', module)
   .add('default', () => (
-    <Component />
+    <Component onChange={action("onChange")} values={[]}/>
   ))
 

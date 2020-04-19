@@ -16,7 +16,7 @@ export default (
   return (
     <div>
       {
-        props.value !== null?<input className="input" value={props.value.format('YYYY-MM-DD')} onClick={()=> setIsActive(!isActive)}/>:
+        props.value !== null?<input className="input" value={props.value.format('YYYY-MM-DD')} onChange={() => {}} onClick={()=> setIsActive(!isActive)}/>:
           <input className="input" placeholder={props.placeholder} onClick={()=> setIsActive(!isActive)}/>
       }
       

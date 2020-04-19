@@ -14,6 +14,8 @@ services:
     build : .
     volumes:
       - ./:/srv
-    command: yarn storybook
+    environment:
+      - "STORYBOOK_PORT=$STORYBOOK_PORT"
+    command: yarn storybook -p $STORYBOOK_PORT
     ports:
-      - "${STORYBOOK_PORT}:9001"
+      - "$STORYBOOK_PORT:$STORYBOOK_PORT"

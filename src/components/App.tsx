@@ -4,29 +4,34 @@ import Button from '@material-ui/core/Button';
 import {Moment} from 'moment';
 import styled from 'styled-components';
 import {toNumber } from 'lodash';
+import {Granularity, Segments } from '~/entities';
+import GranularitySelecter from './GranularitySelecter';
 import DayPicker from '~/components/DayPicker';
+import SegmentComponent from './Segment';
 
 interface IProps{
   apiKey: string;
   url: string;
+  granularity: Granularity;
   fromDate: Moment,
   toDate: Moment,
+  segments: Segments,
   CurrencyPairList: React.ComponentType<{}>;
   onKeyInput: (value:string) => void;
   onUrlInput: (value:string) => void;
   onToDateChange: (value:Moment) => void;
   onFromDateChange: (value:Moment) => void;
+  onGranularityChange: (value:Granularity) => void;
   onSubmit: () => void;
 }
 const Columns = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: stretch;
+  justify-content: space-between;
 `;
 
 const Column = styled.div`
   display: flex;
-  flex-grow: 1;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -40,10 +45,13 @@ const Component = (
     url,
     fromDate,
     toDate,
+    segments,
+    granularity,
     onKeyInput, 
     onUrlInput,
     onFromDateChange,
     onToDateChange,
+    onGranularityChange,
     onSubmit,
     CurrencyPairList,
   } = props;
@@ -51,6 +59,7 @@ const Component = (
     <div>
       <input className="input is-primary" type="text" placeholder="Backlog Url" onChange={(e) => onUrlInput(e.target.value)} value={url}/>
       <input className="input is-primary" type="text" placeholder="Api Key" onChange={(e) => onKeyInput(e.target.value)} value={apiKey}/>
+      <CurrencyPairList/>
       <Columns>
         <Column>
           <DayPicker value={fromDate} onChange={onFromDateChange}/>
@@ -61,10 +70,14 @@ const Component = (
         <Column>
           <DayPicker value={toDate} onChange={onToDateChange}/>
         </Column>
+        <Column>
+          <GranularitySelecter onChange={onGranularityChange} value={granularity} />
+        </Column>
+        <Column>
+          <div className="button" onClick={() => onSubmit()}> 検索 </div>
+        </Column>
       </Columns>
-      <CurrencyPairList/>
-
-      <div className="button" onClick={() => onSubmit()}> 検索 </div>
+      {segments.toList().map(x => <SegmentComponent key={x.currencyPair} row={x}/>)}
     </div>
   )
 }

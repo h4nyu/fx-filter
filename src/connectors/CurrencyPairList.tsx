@@ -5,7 +5,9 @@ import store from '~/store';
 
 
 const Component = () => {
-  return <CurrencyPairList />;
+  return <CurrencyPairList 
+    onChange={store.toggleCurrencyPairs} 
+    values={store.currencyPairs}
+  />;
 };
 export default observer(Component);
-

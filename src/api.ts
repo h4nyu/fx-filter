@@ -32,7 +32,6 @@ export class OandaApi {
   }
 
   getCandels = async (
-    count:number,
     granularity: Granularity,
     currencyPair: CurrencyPair,
     fromDate:Moment,
@@ -50,10 +49,10 @@ export class OandaApi {
       time: moment(x.time),
       volume: x.volume,
       mid: {
-        o: parseInt(x.mid.o),
-        c: parseInt(x.mid.c),
-        h: parseInt(x.mid.h),
-        l: parseInt(x.mid.l),
+        o: parseFloat(x.mid.o),
+        c: parseFloat(x.mid.c),
+        h: parseFloat(x.mid.h),
+        l: parseFloat(x.mid.l),
       }
     }))
   }
