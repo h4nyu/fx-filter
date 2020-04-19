@@ -24,10 +24,11 @@ const Column = styled.div`
   `;
 
 export interface IProps {
-  row: Segment,
+  row: Segment;
+  onDelete: (id:string) => void;
 }
 export default (props: IProps) => {
-  const { row } = props;
+  const { row, onDelete } = props;
   const label = GranularityLabel[row.granularity];
   return (
     <Layout className="card">
@@ -36,7 +37,7 @@ export default (props: IProps) => {
       <Column>{row.ratio.toFixed(3)}</Column>
       <Column>{label}</Column>
       <Column>{row.fromDate.format('YYYY-MM-DD')} ~ {row.toDate.format('YYYY-MM-DD')}</Column>
-      <Column className="button" onClick={() => console.log('aaa')}>削除</Column>
+      <Column className="button" onClick={() => onDelete(row.id)}>削除</Column>
     </Layout>
   );
 };

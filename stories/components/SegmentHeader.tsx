@@ -23,9 +23,6 @@ storiesOf('SegmentHeader', module)
         <Component
           onClear={action('clear')}
         />
-        <Segment
-          row={segment}
-        />
       </>
     )
   })
