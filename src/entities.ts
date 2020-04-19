@@ -93,7 +93,7 @@ export enum CurrencyPair {
   CHF_USD = "CHF_USD",
   EUR_USD = "EUR_USD",
   GBP_USD = "GBP_USD",
-  JPY_USD = "JPY_USD",
+  // JPY_USD = "JPY_USD",
   NZD_USD = "NZD_USD",
 }
 
