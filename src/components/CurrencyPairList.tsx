@@ -3,11 +3,6 @@ import styled from 'styled-components';
 import { CurrencyPair } from '~/entities';
 import Check from './Check';
 
-const options = [
-  { value: CurrencyPair.USD_JPY, label: 'USD/JPY' },
-  { value: CurrencyPair.EUR_JPY, label: 'EUR/JPY' },
-  { value: CurrencyPair.AUD_JPY, label: 'AUD/JPY' },
-];
 
 const Item = styled.div`
   cursor: pointer;
@@ -19,6 +14,7 @@ const Layout = styled.span`
   cursor: pointer;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
 `;
 export interface IProps {
@@ -27,14 +23,14 @@ export interface IProps {
 }
 export default (props: IProps) => {
   const {onChange, values} = props;
-  const rows = Object.keys(CurrencyPair)
+  const rows = Object.keys(CurrencyPair) as CurrencyPair[];
   return (
     <Layout>
       {
-        options.map(x => 
-          <Item onClick={() => {onChange(x.value)}}>
-            <Check value={values.includes(x.value)} onClick={()=>{}}/>
-            <span>{x.label}</span>
+        rows.map(x => 
+          <Item onClick={() => {onChange(x)}}>
+            <Check value={values.includes(x)} onClick={()=>{}}/>
+            <span>{x.replace("_", "/")}</span>
           </Item>)
       }
     </Layout>

@@ -19,6 +19,10 @@ const Item = styled.div`
   flex-direction: row; 
 `
 
+const Label = styled.span`
+  white-space: nowrap;
+`
+
 export interface IProps {
   onChange: (value: Granularity) => void;
   value: Granularity;
@@ -32,7 +36,7 @@ export default (props: IProps) => {
           return (
             <Item onClick={() => onChange(x.value)}>
               <Check value={value===x.value} onClick={()=>{}}/>
-              <span>{x.label}</span>
+              <Label>{x.label}</Label>
             </Item>
           )
         })
