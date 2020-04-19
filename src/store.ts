@@ -1,6 +1,7 @@
 import {
   observable,
   action,
+  computed,
 } from 'mobx';
 import {sortBy, filter, toNumber, toString} from 'lodash';
 import {OandaApi} from '~/api';
@@ -14,6 +15,7 @@ import {v4 as uuid} from 'uuid';
 export class AppStore {
   @observable apiKey: string = "69c0bef088a04d1c592365d9140a5ebe-18b94723790177e9d42e9116916727ef";
   @observable url: string = "https://api-fxpractice.oanda.com";
+  @observable filterValue: number  = 0;
   @observable fromDate:Moment = moment();
   @observable toDate:Moment = moment();
   @observable granularity:Granularity = Granularity.D;
@@ -27,6 +29,11 @@ export class AppStore {
     const url = localStorage.getItem('url');
     if(url !== null) {this.url = url; }
   }
+
+  @computed get filterdSegments() {
+    return this.segments.filter(x => x.ratio > this.filterValue)
+  }
+
   @action setApiKey = (value: string) => {
     this.apiKey = value;
     localStorage.setItem('apiKey', value);
@@ -54,6 +61,10 @@ export class AppStore {
   @action setFromDate = (value: Moment) => { 
     this.fromDate = value
     localStorage.setItem('fromDate', value.format());
+  }
+
+  @action setFilterValue = (value: number) => { 
+    this.filterValue = value
   }
 
   @action toggleCurrencyPairs = (value: CurrencyPair) => { 

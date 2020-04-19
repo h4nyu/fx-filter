@@ -11,7 +11,7 @@ storiesOf('SegmentHeader', module)
   .add('default', () => {
     const segment = {
       id: 'aaa',
-      currencyPair: CurrencyPair.USD_JPY,
+      currencyPair: CurrencyPair.AUD_JPY,
       granularity: Granularity.H1,
       direction: Direction.High,
       fromDate: moment(),
