@@ -3,16 +3,17 @@ import styled from 'styled-components';
 import {Segment } from '~/entities';
 import CandleList from './CandleList';
 
-const Layout = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex-basis: auto;
-  `;
 
-const HeaderLayout = styled.div`
+const Layout = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+  `;
+
+const Column = styled.div`
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
   `;
 
 
@@ -21,21 +22,14 @@ export interface IProps {
 }
 export default (props: IProps) => {
   const { onClear } = props;
-  const Header = () => {
-    return (
-      <HeaderLayout>
-        <div>通貨ペア</div>
-        <div>方向</div>
-        <div>確率</div>
-        <div>ローソク足</div>
-        <div>収集期間</div>
-        <div className="button" onClick={() => onClear()}>全削除</div>
-      </HeaderLayout>
-    )
-  }
   return (
     <Layout className="card">
-      <Header/>
+      <Column>通貨ペア  </Column>
+      <Column>方向      </Column>
+      <Column>確率      </Column>
+      <Column>ローソク足</Column>
+      <Column>収集期間  </Column>
+      <Column className="button" onClick={() => onClear()}>全削除</Column>
     </Layout>
   );
 };
