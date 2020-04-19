@@ -4,7 +4,7 @@ import {
 } from 'mobx';
 import {sortBy, filter, toNumber, toString} from 'lodash';
 import {OandaApi} from '~/api';
-import {Instruments, Granularity, CurrencyPair, Segment, Segments, Direction} from '~/entities';
+import {Instruments, Granularity, CurrencyPair, Segment, Segments, Direction, WeekDay} from '~/entities';
 import { Map } from 'immutable'
 import { getUpCount } from '~/logics';
 import  'moment-business-days'
@@ -12,7 +12,7 @@ import moment, {Moment} from "moment";
 import {v4 as uuid} from 'uuid';
 
 export class AppStore {
-  @observable apiKey: string = "69c0bef088a04d1c592365d9140a5ebe-18b94723790177e9d42e9116916727ef";
+  @observable apiKey: string = "";
   @observable url: string = "https://api-fxpractice.oanda.com";
   @observable fromDate:Moment = moment();
   @observable toDate:Moment = moment();
@@ -20,6 +20,7 @@ export class AppStore {
   @observable currencyPairs: CurrencyPair[] = [];
   @observable instruments: Instruments = [];
   @observable segments:Segments = Map();
+  @observable weekDays:WeekDay[] = [] ;
 
   constructor() {
     const apiKey = localStorage.getItem('apiKey');
@@ -64,6 +65,14 @@ export class AppStore {
     }
   }
 
+  @action toggleWeekday = (value: WeekDay) => { 
+    if (this.weekDays.includes(value)){
+      this.weekDays = this.weekDays.filter(x => x!== value)
+    }else{
+      this.weekDays = [...this.weekDays, value]
+    }
+  }
+
   @action submit = async () => { 
     await Promise.all(
       this.currencyPairs.map(x => this.fetchSegment(x))
@@ -83,13 +92,16 @@ export class AppStore {
       this.apiKey,
       this.url,
     )
-    const candles = await api.getCandels(
+    let candles = await api.getCandels(
       this.granularity, 
       currencyPair,
       this.fromDate,
       this.toDate,
     )
     if (candles === undefined){return}
+    if(this.weekDays.length > 0){
+      candles = candles.filter(x => this.weekDays.includes(x.time.format('dddd') as WeekDay))
+    }
     const upCount = getUpCount(candles)
     const count = candles.length;
     const upRatio = upCount/count;

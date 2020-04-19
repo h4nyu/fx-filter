@@ -4,8 +4,9 @@ import Button from '@material-ui/core/Button';
 import {Moment} from 'moment';
 import styled from 'styled-components';
 import {toNumber } from 'lodash';
-import {Granularity, Segments } from '~/entities';
-import GranularitySelecter from './GranularitySelecter';
+import {Granularity, Segments, WeekDay } from '~/entities';
+import GranularitySelector from './GranularitySelector';
+import WeekDaySelector from './WeekDaySelector';
 import DayPicker from '~/components/DayPicker';
 import SegmentComponent from './Segment';
 import SegmentHeader from './SegmentHeader';
@@ -16,6 +17,7 @@ interface IProps{
   granularity: Granularity;
   fromDate: Moment,
   toDate: Moment,
+  weekDays: WeekDay[],
   segments: Segments,
   CurrencyPairList: React.ComponentType<{}>;
   onKeyInput: (value:string) => void;
@@ -23,6 +25,7 @@ interface IProps{
   onToDateChange: (value:Moment) => void;
   onFromDateChange: (value:Moment) => void;
   onGranularityChange: (value:Granularity) => void;
+  onWeekdayChange: (value:WeekDay) => void;
   onSubmit: () => void;
   onClear: () => void;
   onDelete: (id:string) => void;
@@ -51,11 +54,13 @@ const Component = (
     toDate,
     segments,
     granularity,
+    weekDays,
     onKeyInput, 
     onUrlInput,
     onFromDateChange,
     onToDateChange,
     onGranularityChange,
+    onWeekdayChange,
     onSubmit,
     onClear,
     onDelete,
@@ -66,6 +71,7 @@ const Component = (
       <input className="input is-primary" type="text" placeholder="Backlog Url" onChange={(e) => onUrlInput(e.target.value)} value={url}/>
       <input className="input is-primary" type="text" placeholder="Api Key" onChange={(e) => onKeyInput(e.target.value)} value={apiKey}/>
       <CurrencyPairList/>
+      <WeekDaySelector onChange={onWeekdayChange} values={weekDays} />
       <Columns>
         <Column>
           <DayPicker value={fromDate} onChange={onFromDateChange}/>
@@ -77,7 +83,7 @@ const Component = (
           <DayPicker value={toDate} onChange={onToDateChange}/>
         </Column>
         <Column>
-          <GranularitySelecter onChange={onGranularityChange} value={granularity} />
+          <GranularitySelector onChange={onGranularityChange} value={granularity} />
         </Column>
         <Column>
           <div className="button" onClick={() => onSubmit()}> 検索 </div>

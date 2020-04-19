@@ -12,12 +12,14 @@ const Component = () => {
     granularity={store.granularity}
     fromDate={store.fromDate}
     toDate={store.toDate}
+    weekDays={store.weekDays}
     segments={store.segments}
     onKeyInput={store.setApiKey}
     onUrlInput={store.setUrl}
     onFromDateChange={store.setFromDate}
     onToDateChange={store.setToDate}
     onGranularityChange={store.setGranularity}
+    onWeekdayChange={store.toggleWeekday}
     onSubmit={store.submit}
     onClear={store.clear}
     onDelete={store.delete}
