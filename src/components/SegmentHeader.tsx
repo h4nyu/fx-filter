@@ -3,13 +3,6 @@ import styled from 'styled-components';
 import {Segment } from '~/entities';
 import CandleList from './CandleList';
 
-enum GranularityLabel {
-  M15 = "15分足",
-  M5 = "5分足",
-  H1 = "1時間足",
-  D = "日足",
-}
-
 const Layout = styled.div`
     display: flex;
     flex-direction: column;
@@ -22,21 +15,21 @@ const HeaderLayout = styled.div`
     justify-content: space-between;
   `;
 
+
 export interface IProps {
-  row: Segment,
+  onClear: () => void;
 }
 export default (props: IProps) => {
-  const { row } = props;
-  const label = GranularityLabel[row.granularity];
+  const { onClear } = props;
   const Header = () => {
     return (
       <HeaderLayout>
-        <div>{row.currencyPair.replace("_", "/")}</div>
-        <div>{row.direction}</div>
-        <div>{row.ratio.toFixed(3)}</div>
-        <div>{label}</div>
-        <div>{row.fromDate.format('YYYY/MM/DD')} - {row.toDate.format('YYYY/MM/DD')}</div>
-        <div className="button" onClick={() => console.log('aaa')}>削除</div>
+        <div>通貨ペア</div>
+        <div>方向</div>
+        <div>確率</div>
+        <div>ローソク足</div>
+        <div>収集期間</div>
+        <div className="button" onClick={() => onClear()}>全削除</div>
       </HeaderLayout>
     )
   }

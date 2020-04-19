@@ -65,11 +65,13 @@ export class AppStore {
   }
 
   @action submit = async () => { 
-    this.segments = this.segments.clear()
     await Promise.all(
       this.currencyPairs.map(x => this.fetchSegment(x))
     )
+  }
 
+  @action clearSegments = async () => { 
+    this.segments.clear()
   }
 
   @action fetchSegment = async (currencyPair:CurrencyPair) => { 
