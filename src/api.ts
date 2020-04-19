@@ -5,6 +5,11 @@ import {OandaAccount, Instrument, Granularity, Candle, CurrencyPair} from '~/ent
 
 
 const DATE_FORMAT = 'YYYY-MM-DD';
+const DURATIONS = {
+  [Granularity.D]:  moment.duration(1*5000, "days"),
+  [Granularity.M5]: moment.duration(5*5000, "minutes"),
+  [Granularity.H1]: moment.duration(1*5000, "hours"),
+}
 
 export class OandaApi {
   axios: AxiosInstance
@@ -31,7 +36,7 @@ export class OandaApi {
     return data.instruments
   }
 
-  getCandels = async (
+  private getCandelChunks = async (
     granularity: Granularity,
     currencyPair: CurrencyPair,
     fromDate:Moment,
@@ -44,6 +49,7 @@ export class OandaApi {
         to:toDate.format(),
       }
     });
+
     const data = res.data as {candles:any[]}
     return data.candles.map(x => ({
       time: moment(x.time),
@@ -55,5 +61,30 @@ export class OandaApi {
         l: parseFloat(x.mid.l),
       }
     }))
+  }
+
+  getCandels = async (
+    granularity: Granularity,
+    currencyPair: CurrencyPair,
+    fromDate:Moment,
+    toDate:Moment,
+  ):Promise<Candle[]> => {
+    let current = fromDate.clone();
+    let rows:Candle[] = [];
+    while (current < toDate) {
+      const chunkFromDate = current.clone()
+      const nextToDate = current.clone().add(DURATIONS[granularity])
+      const chunkToDate = nextToDate < toDate ? nextToDate.clone(): toDate.clone()
+      const res = await this.getCandelChunks(
+        granularity,
+        currencyPair,
+        chunkFromDate,
+        chunkToDate,
+      )
+      current = chunkToDate
+      if (res === undefined) {return []}
+      rows = rows.concat(res)
+    }
+    return rows
   }
 }
