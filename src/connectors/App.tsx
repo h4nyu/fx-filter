@@ -19,6 +19,8 @@ const Component = () => {
     onToDateChange={store.setToDate}
     onGranularityChange={store.setGranularity}
     onSubmit={store.submit}
+    onClear={store.clear}
+    onDelete={store.delete}
     CurrencyPairList={CurrencyPairList}
   />;
 };

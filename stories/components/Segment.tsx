@@ -19,5 +19,6 @@ storiesOf('Segment', module)
     }
     return (<Component
       row={object('row', segment)}
+      onDelete={action('onDelete')}
     />)
   })

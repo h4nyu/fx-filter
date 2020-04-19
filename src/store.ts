@@ -70,8 +70,12 @@ export class AppStore {
     )
   }
 
-  @action clearSegments = async () => { 
-    this.segments.clear()
+  @action clear = () => { 
+    this.segments = this.segments.clear()
+  }
+
+  @action delete = (id: string) => { 
+    this.segments = this.segments.delete(id)
   }
 
   @action fetchSegment = async (currencyPair:CurrencyPair) => { 

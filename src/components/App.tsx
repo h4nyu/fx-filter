@@ -8,6 +8,7 @@ import {Granularity, Segments } from '~/entities';
 import GranularitySelecter from './GranularitySelecter';
 import DayPicker from '~/components/DayPicker';
 import SegmentComponent from './Segment';
+import SegmentHeader from './SegmentHeader';
 
 interface IProps{
   apiKey: string;
@@ -23,7 +24,10 @@ interface IProps{
   onFromDateChange: (value:Moment) => void;
   onGranularityChange: (value:Granularity) => void;
   onSubmit: () => void;
+  onClear: () => void;
+  onDelete: (id:string) => void;
 }
+
 const Columns = styled.div`
   display: flex;
   flex-direction: row;
@@ -53,6 +57,8 @@ const Component = (
     onToDateChange,
     onGranularityChange,
     onSubmit,
+    onClear,
+    onDelete,
     CurrencyPairList,
   } = props;
   return (
@@ -77,7 +83,8 @@ const Component = (
           <div className="button" onClick={() => onSubmit()}> 検索 </div>
         </Column>
       </Columns>
-      {segments.toList().map(x => <SegmentComponent key={x.currencyPair} row={x}/>)}
+      <SegmentHeader onClear={onClear}/>
+      {segments.toList().map(x => <SegmentComponent key={x.currencyPair} row={x} onDelete={onDelete}/>)}
     </div>
   )
 }
