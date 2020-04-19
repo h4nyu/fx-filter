@@ -41,7 +41,11 @@ export class AppStore {
   }
 
   @action setToDate = (value: Moment) => { 
-    this.toDate = value
+    if (value > moment()){
+      this.toDate = moment()
+    }else{
+      this.toDate = value
+    }
     localStorage.setItem('toDaate', value.format());
   }
 
