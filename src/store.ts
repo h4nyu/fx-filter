@@ -82,7 +82,7 @@ export class AppStore {
     const count = candles.length;
     const segment:Segment = {
       currencyPair,
-      candles: candles,
+      candles: sortBy(candles, x => - x.time),
       count: count,
       upRatio: upCount/count,
       downRatio: (count - upCount)/count,

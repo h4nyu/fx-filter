@@ -35,8 +35,8 @@ export default (props: IProps) => {
     return <HeaderLayout className="card">
       <div>{row.currencyPair.replace("_", "/")}</div>
       <div>件数:{row.count}</div>
-      <div>上げ確率:{row.upRatio}</div>
-      <div>下げ確率:{row.downRatio}</div>
+      <div>上げ確率:{row.upRatio.toFixed(3)}</div>
+      <div>下げ確率:{row.downRatio.toFixed(3)}</div>
     </HeaderLayout>
   }
   return (
