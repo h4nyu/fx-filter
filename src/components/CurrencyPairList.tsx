@@ -28,7 +28,7 @@ export default (props: IProps) => {
     <Layout>
       {
         rows.map(x => 
-          <Item onClick={() => {onChange(x)}}>
+          <Item key={x} onClick={() => {onChange(x)}}>
             <Check value={values.includes(x)} onClick={()=>{}}/>
             <span>{x.replace("_", "/")}</span>
           </Item>)

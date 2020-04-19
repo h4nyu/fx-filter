@@ -16,6 +16,7 @@ storiesOf('Segment', module)
       fromDate: moment(),
       toDate: moment().add(1, 'days'),
       ratio:0.7,
+      count:1000,
     }
     return (<Component
       row={object('row', segment)}

@@ -84,7 +84,7 @@ const Component = (
         </Column>
       </Columns>
       <SegmentHeader onClear={onClear}/>
-      {segments.toList().map(x => <SegmentComponent key={x.currencyPair} row={x} onDelete={onDelete}/>)}
+      {segments.toList().map(x => <SegmentComponent key={x.id} row={x} onDelete={onDelete}/>)}
     </div>
   )
 }

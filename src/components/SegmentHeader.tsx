@@ -24,11 +24,13 @@ export default (props: IProps) => {
   const { onClear } = props;
   return (
     <Layout className="card">
-      <Column>通貨ペア  </Column>
-      <Column>方向      </Column>
-      <Column>確率      </Column>
+      <Column>通貨ペア</Column>
+      <Column>方向</Column>
+      <Column>確率</Column>
       <Column>ローソク足</Column>
-      <Column>収集期間  </Column>
+      <Column>開始日</Column>
+      <Column>終了日</Column>
+      <Column>件数</Column>
       <Column className="button" onClick={() => onClear()}>全削除</Column>
     </Layout>
   );

@@ -36,7 +36,9 @@ export default (props: IProps) => {
       <Column>{row.direction}</Column>
       <Column>{row.ratio.toFixed(3)}</Column>
       <Column>{label}</Column>
-      <Column>{row.fromDate.format('YYYY-MM-DD')} ~ {row.toDate.format('YYYY-MM-DD')}</Column>
+      <Column>{row.fromDate.format('YYYY-MM-DD')}</Column>
+      <Column>{row.toDate.format('YYYY-MM-DD')}</Column>
+      <Column>{row.count}</Column>
       <Column className="button" onClick={() => onDelete(row.id)}>削除</Column>
     </Layout>
   );

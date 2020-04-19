@@ -101,8 +101,10 @@ export class AppStore {
       ratio: upRatio > 0.5 ? upRatio : 1 - upRatio,
       fromDate: this.fromDate,
       toDate:  this.toDate,
+      count: candles.length,
     }
     this.segments = this.segments.set(segment.id, segment)
+    this.segments = this.segments.sortBy(x => - x.ratio)
   }
 }
 

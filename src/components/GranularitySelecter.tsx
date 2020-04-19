@@ -34,7 +34,7 @@ export default (props: IProps) => {
       {
         options.map(x => {
           return (
-            <Item onClick={() => onChange(x.value)}>
+            <Item key={x.value} onClick={() => onChange(x.value)}>
               <Check value={value===x.value} onClick={()=>{}}/>
               <Label>{x.label}</Label>
             </Item>
