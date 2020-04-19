@@ -5,9 +5,7 @@ import store from '~/store';
 
 
 const Component = () => {
-  return <CurrencyPairList 
-    rows={store.instruments}
-  />;
+  return <CurrencyPairList />;
 };
 export default observer(Component);
 

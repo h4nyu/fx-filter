@@ -1,26 +1,35 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import {Moment} from 'moment';
 import styled from 'styled-components';
 import {toNumber } from 'lodash';
+import DayPicker from '~/components/DayPicker';
 
 interface IProps{
   apiKey: string;
   url: string;
-  accountId: string;
-  duration: number;
-  issues: any[];
+  fromDate: Moment,
+  toDate: Moment,
   CurrencyPairList: React.ComponentType<{}>;
   onKeyInput: (value:string) => void;
   onUrlInput: (value:string) => void;
-  onAccountIdInput: (value:string) => void;
-  onDurationInput: (value:number) => void;
+  onToDateChange: (value:Moment) => void;
+  onFromDateChange: (value:Moment) => void;
   onSubmit: () => void;
 }
-const Th = styled.th`
-  text-align: left;
-  border: 1px solid #dddddd;
-  padding: 0.5em;
+const Columns = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Component = (
@@ -29,13 +38,12 @@ const Component = (
   const {
     apiKey,
     url,
-    accountId,
-    duration,
-    issues,
+    fromDate,
+    toDate,
     onKeyInput, 
     onUrlInput,
-    onDurationInput,
-    onAccountIdInput,
+    onFromDateChange,
+    onToDateChange,
     onSubmit,
     CurrencyPairList,
   } = props;
@@ -43,29 +51,20 @@ const Component = (
     <div>
       <input className="input is-primary" type="text" placeholder="Backlog Url" onChange={(e) => onUrlInput(e.target.value)} value={url}/>
       <input className="input is-primary" type="text" placeholder="Api Key" onChange={(e) => onKeyInput(e.target.value)} value={apiKey}/>
-      <input className="input is-primary" type="text" placeholder="Project Id" onChange={(e) => onAccountIdInput(e.target.value)} value={accountId}/>
-      <div className="button" onClick={() => onSubmit()}> 検索 </div>
-      <div> 件数{issues.length} </div>
+      <Columns>
+        <Column>
+          <DayPicker value={fromDate} onChange={onFromDateChange}/>
+        </Column>
+        <Column>
+          <i className="fas fa-arrows-alt-h"></i>
+        </Column>
+        <Column>
+          <DayPicker value={toDate} onChange={onToDateChange}/>
+        </Column>
+      </Columns>
       <CurrencyPairList/>
 
-      <table className="table">
-        <tr>
-          <th>キー</th>
-          <th>件名</th>
-          <th>状態</th>
-          <th>担当者</th>
-          <th>期限日</th>
-        </tr>
-        {issues.map( (x:any) => (
-          <tr key={x.id}>
-            <Th> {x.issueKey} </Th>
-            <Th> {x.summary} </Th>
-            <Th> {x.assignee.name} </Th>
-            <Th> {x.status.name} </Th>
-            <Th> {x.dueDate.format("YYYY-MM-DD")} </Th>
-          </tr>
-        ))}
-      </table>
+      <div className="button" onClick={() => onSubmit()}> 検索 </div>
     </div>
   )
 }

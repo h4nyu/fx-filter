@@ -20,6 +20,13 @@ export type Candle = {
   volume: number,
 };
 
+
 export type Instruments = Instrument[];
-export type Granularity = "M1" | "M5"
-export type CurrencyPair = "EUR_USD"
+
+export enum Granularity {
+  M1 = "M1",
+  M5 = "M5",
+}
+export enum CurrencyPair {
+  EUR_USD = "EUR_USD",
+}

@@ -35,10 +35,14 @@ export class OandaApi {
     count:number,
     granularity: Granularity,
     currencyPair: CurrencyPair,
+    fromDate:Moment,
+    toDate:Moment,
   ):Promise<Candle[]> => {
     const res = await this.axios.get(`/v3/instruments/${currencyPair}/candles`, {
       params:{
         granularity,
+        from:fromDate.format(),
+        to:toDate.format(),
       }
     });
     const data = res.data as {candles:any[]}
