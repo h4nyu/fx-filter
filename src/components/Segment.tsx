@@ -3,14 +3,17 @@ import styled from 'styled-components';
 import {Segment } from '~/entities';
 import CandleList from './CandleList';
 
-
+enum GranularityLabel {
+  M5 = "5分足",
+  H1 = "1時間足",
+  D = "日足",
+}
 
 const Layout = styled.div`
     display: flex;
-    margin: 0.5em;
+    padding: 0.25em;
     flex-direction: column;
   `;
-
 
 const HeaderLayout = styled.div`
     display: flex;
@@ -31,14 +34,17 @@ export interface IProps {
 }
 export default (props: IProps) => {
   const { row } = props;
+  const label = GranularityLabel[row.granularity];
   const Header = () => {
-    return <HeaderLayout className="card">
-      <div>{row.currencyPair.replace("_", "/")}</div>
-      <div>件数:{row.count}</div>
-      {
-        row.upRatio > row.downRatio? <><div>high</div><div>{row.upRatio.toFixed(3)}</div></>:<><div>low</div><div>{row.downRatio.toFixed(3)}</div></>
-      }
-    </HeaderLayout>
+    return (
+      <HeaderLayout>
+        <div>{row.currencyPair.replace("_", "/")}</div>
+        <div>{row.direction}</div>
+        <div>{row.ratio.toFixed(3)}</div>
+        <div>{label}</div>
+        <div>{row.fromDate.format('YYYY/MM/DD')} - {row.toDate.format('YYYY/MM/DD')}</div>
+      </HeaderLayout>
+    )
   }
   return (
     <Layout className="card">

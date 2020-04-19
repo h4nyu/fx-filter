@@ -4,11 +4,12 @@ import {
 } from 'mobx';
 import {sortBy, filter, toNumber, toString} from 'lodash';
 import {OandaApi} from '~/api';
-import {Instruments, Granularity, CurrencyPair, Segment, Segments} from '~/entities';
-import {Map } from 'immutable'
+import {Instruments, Granularity, CurrencyPair, Segment, Segments, Direction} from '~/entities';
+import { Map } from 'immutable'
 import { getUpCount } from '~/logics';
 import  'moment-business-days'
 import moment, {Moment} from "moment";
+import {v4 as uuid} from 'uuid';
 
 export class AppStore {
   @observable apiKey: string = "69c0bef088a04d1c592365d9140a5ebe-18b94723790177e9d42e9116916727ef";
@@ -19,6 +20,7 @@ export class AppStore {
   @observable currencyPairs: CurrencyPair[] = [CurrencyPair.USD_JPY];
   @observable instruments: Instruments = [];
   @observable segments:Segments = Map();
+
   constructor() {
     const apiKey = localStorage.getItem('apiKey');
     if(apiKey !== null) {this.apiKey = apiKey; }
@@ -84,14 +86,17 @@ export class AppStore {
     if (candles === undefined){return}
     const upCount = getUpCount(candles)
     const count = candles.length;
+    const upRatio = upCount/count;
     const segment:Segment = {
-      currencyPair,
-      candles: sortBy(candles, x => - x.time),
-      count: count,
-      upRatio: upCount/count,
-      downRatio: (count - upCount)/count,
+      id: uuid(),
+      currencyPair: currencyPair,
+      granularity: this.granularity,
+      direction: upRatio > 0.5 ? Direction.High : Direction.Low,
+      ratio: upRatio > 0.5 ? upRatio : 1 - upRatio,
+      fromDate: this.fromDate,
+      toDate:  this.toDate,
     }
-    this.segments = this.segments.set(segment.currencyPair, segment)
+    this.segments = this.segments.set(segment.id, segment)
   }
 }
 
