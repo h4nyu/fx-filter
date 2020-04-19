@@ -36,7 +36,7 @@ export default (props: IProps) => {
       <div>{row.currencyPair.replace("_", "/")}</div>
       <div>件数:{row.count}</div>
       {
-        row.upRatio > row.downRatio? <><div>high</div><div>{row.upRatio.toFixed(3)}</div></>:<><div>{row.downRatio.toFixed(3)}</div><div>low</div></>
+        row.upRatio > row.downRatio? <><div>high</div><div>{row.upRatio.toFixed(3)}</div></>:<><div>low</div><div>{row.downRatio.toFixed(3)}</div></>
       }
     </HeaderLayout>
   }
