@@ -39,6 +39,7 @@ export type Segments = Map<string, Segment>;
 export type Instruments = Instrument[];
 
 export enum Granularity {
+  M15 = "M15",
   M5 = "M5",
   H1 = "H1",
   D = "D",

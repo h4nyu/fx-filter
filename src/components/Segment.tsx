@@ -4,6 +4,7 @@ import {Segment } from '~/entities';
 import CandleList from './CandleList';
 
 enum GranularityLabel {
+  M15 = "15分足",
   M5 = "5分足",
   H1 = "1時間足",
   D = "日足",
