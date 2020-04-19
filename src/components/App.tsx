@@ -14,6 +14,7 @@ import SegmentHeader from './SegmentHeader';
 interface IProps{
   apiKey: string;
   url: string;
+  filterValue: number | undefined; 
   granularity: Granularity;
   fromDate: Moment,
   toDate: Moment,
@@ -29,6 +30,7 @@ interface IProps{
   onSubmit: () => void;
   onClear: () => void;
   onDelete: (id:string) => void;
+  onFilterInput: (value:number) => void;
 }
 
 const Columns = styled.div`
@@ -50,6 +52,7 @@ const Component = (
   const {
     apiKey,
     url,
+    filterValue,
     fromDate,
     toDate,
     segments,
@@ -64,6 +67,7 @@ const Component = (
     onSubmit,
     onClear,
     onDelete,
+    onFilterInput,
     CurrencyPairList,
   } = props;
   return (
@@ -84,6 +88,9 @@ const Component = (
         </Column>
         <Column>
           <GranularitySelector onChange={onGranularityChange} value={granularity} />
+        </Column>
+        <Column>
+          <input className="input" type="number" step={0.01} placeholder="Filter" onChange={(e) => onFilterInput(+e.target.value)} value={filterValue}/>
         </Column>
         <Column>
           <div className="button" onClick={() => onSubmit()}> 検索 </div>

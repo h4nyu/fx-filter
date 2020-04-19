@@ -9,6 +9,7 @@ const Component = () => {
   return <App 
     apiKey={store.apiKey}
     url={store.url}
+    filterValue={store.filterValue}
     granularity={store.granularity}
     fromDate={store.fromDate}
     toDate={store.toDate}
@@ -20,6 +21,7 @@ const Component = () => {
     onToDateChange={store.setToDate}
     onGranularityChange={store.setGranularity}
     onWeekdayChange={store.toggleWeekday}
+    onFilterInput={store.setFilterValue}
     onSubmit={store.submit}
     onClear={store.clear}
     onDelete={store.delete}
