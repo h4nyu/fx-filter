@@ -8,6 +8,7 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 const DURATIONS = {
   [Granularity.D]:  moment.duration(1*5000, "days"),
   [Granularity.M5]: moment.duration(5*5000, "minutes"),
+  [Granularity.M15]: moment.duration(15*5000, "minutes"),
   [Granularity.H1]: moment.duration(1*5000, "hours"),
 }
 
