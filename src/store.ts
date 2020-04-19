@@ -12,6 +12,32 @@ import  'moment-business-days'
 import moment, {Moment} from "moment";
 import {v4 as uuid} from 'uuid';
 
+class LoadingStore {
+  @observable pendingNum = 0;
+  @action activate = () => {
+    this.pendingNum = this.pendingNum + 1;
+  }
+  @action deactivate = () => {
+    this.pendingNum = this.pendingNum - 1;
+    if (this.pendingNum < 0) {
+      this.pendingNum = 0;
+    }
+  }
+
+  dispatch = async(callback: () => Promise<void>) => {
+    this.activate();
+    try {
+      await callback();
+    } catch(e) {
+      console.error('Error caught, no action taken');
+      throw e;
+    }
+    finally {
+      this.deactivate();
+    }
+  }
+}
+
 export class AppStore {
   @observable apiKey: string = "";
   @observable url: string = "https://api-fxpractice.oanda.com";
@@ -86,7 +112,7 @@ export class AppStore {
 
   @action submit = async () => { 
     await Promise.all(
-      this.currencyPairs.map(x => this.fetchSegment(x))
+      this.currencyPairs.map(x => loadingStore.dispatch(async () => this.fetchSegment(x)))
     )
   }
 
@@ -133,3 +159,7 @@ export class AppStore {
 
 const store = new AppStore();
 export default store;
+export const loadingStore = new LoadingStore(); 
+
+
+

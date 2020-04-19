@@ -20,7 +20,6 @@ interface IProps{
   toDate: Moment,
   weekDays: WeekDay[],
   segments: Segments,
-  CurrencyPairList: React.ComponentType<{}>;
   onKeyInput: (value:string) => void;
   onUrlInput: (value:string) => void;
   onToDateChange: (value:Moment) => void;
@@ -31,6 +30,8 @@ interface IProps{
   onClear: () => void;
   onDelete: (id:string) => void;
   onFilterInput: (value:number) => void;
+  CurrencyPairList: React.ComponentType<{}>;
+  Loading: React.ComponentType<{}>;
 }
 
 const Columns = styled.div`
@@ -69,6 +70,7 @@ const Component = (
     onDelete,
     onFilterInput,
     CurrencyPairList,
+    Loading,
   } = props;
   return (
     <div>
@@ -98,6 +100,7 @@ const Component = (
       </Columns>
       <SegmentHeader onClear={onClear}/>
       {segments.toList().map(x => <SegmentComponent key={x.id} row={x} onDelete={onDelete}/>)}
+      <Loading/>
     </div>
   )
 }

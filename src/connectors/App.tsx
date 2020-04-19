@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import App from '~/components/App';
 import CurrencyPairList from './CurrencyPairList'
+import Loading from './Loading';
 import store from '~/store';
 
 
@@ -26,6 +27,7 @@ const Component = () => {
     onClear={store.clear}
     onDelete={store.delete}
     CurrencyPairList={CurrencyPairList}
+    Loading={Loading}
   />;
 };
 export default observer(Component);

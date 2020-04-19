@@ -25,7 +25,7 @@ export default (props: IProps) => {
   const {onChange, values} = props;
   const rows = Object.keys(CurrencyPair) as CurrencyPair[];
   return (
-    <Layout>
+    <Layout className="card">
       {
         rows.map(x => 
           <Item key={x} onClick={() => {onChange(x)}}>
