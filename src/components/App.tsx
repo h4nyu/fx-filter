@@ -118,12 +118,7 @@ const Component = (
 
       <Label> 確率下限 </Label>
       <input className="input" type="number" step={0.01} placeholder="Filter" onChange={(e) => onFilterInput(+e.target.value)} value={filterValue}/>
-<<<<<<< HEAD
        <i onClick={() => onDownload()} className="button fas fa-file-download is-full-width"/>
-||||||| merged common ancestors
-=======
-
->>>>>>> 1abd03d8d1be3403315ea36a80c0f5e758c28c64
       <SegmentHeader onClear={onClear}/>
       {segments.toList().map(x => <SegmentComponent key={x.id} row={x} onDelete={onDelete}/>)}
       <Loading/>
