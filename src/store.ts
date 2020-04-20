@@ -42,7 +42,7 @@ export class AppStore {
   @observable apiKey: string = "";
   @observable url: string = "https://api-fxpractice.oanda.com";
   @observable filterValue: number  = 0;
-  @observable fromDate:Moment = moment();
+  @observable fromDate:Moment = moment().add(-7, 'days');
   @observable toDate:Moment = moment();
   @observable granularity:Granularity = Granularity.D;
   @observable currencyPairs: CurrencyPair[] = [];
