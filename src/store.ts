@@ -195,6 +195,7 @@ export class AppStore {
           x.direction,
           x.ratio,
           x.fromDate.format(fmt),
+          x.toDate.format(fmt),
           x.weekDay,
           x.count
         ];
