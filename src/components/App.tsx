@@ -84,30 +84,31 @@ const Component = (
 
       <Label> 通貨ペア </Label>
       <CurrencyPairList/>
+      <hr />
 
       <Label> 曜日 </Label>
       <WeekDaySelector onChange={onWeekdayChange} value={weekDay} />
+
+      <hr />
       <Columns>
-        <Column>
-          <Label> 期間 </Label>
-          <Columns>
-            <Column>
-              <DayPicker value={fromDate} onChange={onFromDateChange}/>
-            </Column>
-            <Column>
-              <i className="fas fa-arrows-alt-h"></i>
-            </Column>
-            <Column>
-              <DayPicker value={toDate} onChange={onToDateChange}/>
-            </Column>
-          </Columns>
-        </Column>
         <Column>
           <Label> ローソク足 </Label>
           <GranularitySelector onChange={onGranularityChange} value={granularity} />
         </Column>
+      </Columns>
+      <hr />
+
+      <Columns>
         <Column>
-          <div className="button is-full-width" onClick={() => onSubmit()}> 検索 </div>
+          <Label> 開始日 </Label>
+          <DayPicker value={fromDate} onChange={onFromDateChange}/>
+        </Column>
+        <Column>
+          <Label> 終了日 </Label>
+          <DayPicker value={toDate} onChange={onToDateChange}/>
+        </Column>
+        <Column>
+          <div className="button is-full-height" onClick={() => onSubmit()}> 検索 </div>
         </Column>
       </Columns>
 
