@@ -80,5 +80,13 @@ export enum WeekDay {
   Thursday = "Thursday", 
   Friday = "Friday",  
   Saturday = "Saturday",
-
 }
+
+export const weekDayLabels:Map<WeekDay,string> = Map([
+  [WeekDay.Monday, "月"],
+  [WeekDay.Tuesday, "日"],
+  [WeekDay.Wednesday, "水"],
+  [WeekDay.Thursday, "木"],
+  [WeekDay.Friday, "金"],
+  [WeekDay.Saturday, "土"],
+])

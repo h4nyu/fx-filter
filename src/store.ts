@@ -147,7 +147,7 @@ export class AppStore {
     }
     const count = candles.length;
     const upCount = count > 0 ? getUpCount(candles): 0
-    const upRatio = upCount/count;
+    const upRatio = count > 0 ? upCount/count : 0;
     const segment:Segment = {
       id: uuid(),
       currencyPair: currencyPair,
