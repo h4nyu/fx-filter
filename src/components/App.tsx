@@ -14,6 +14,7 @@ import SegmentHeader from './SegmentHeader';
 const Label = styled.div`
   font-weight: bold;
 `
+
 interface IProps{
   apiKey: string;
   url: string;
@@ -77,7 +78,7 @@ const Component = (
     Loading,
   } = props;
   return (
-    <div>
+    <>
       <Label> Api Url </Label>
       <input className="input" type="text" placeholder="Backlog Url" onChange={(e) => onUrlInput(e.target.value)} value={url}/>
 
@@ -118,11 +119,11 @@ const Component = (
 
       <Label> 確率下限 </Label>
       <input className="input" type="number" step={0.01} placeholder="Filter" onChange={(e) => onFilterInput(+e.target.value)} value={filterValue}/>
-       <i onClick={() => onDownload()} className="button fas fa-file-download is-full-width"/>
+      <i onClick={() => onDownload()} className="button fas fa-file-download is-fullwidth"/>
       <SegmentHeader onClear={onClear}/>
       {segments.toList().map(x => <SegmentComponent key={x.id} row={x} onDelete={onDelete}/>)}
       <Loading/>
-    </div>
+    </>
   )
 }
 
