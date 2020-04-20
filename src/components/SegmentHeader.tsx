@@ -14,6 +14,7 @@ const Column = styled.div`
     display: flex;
     flex-grow: 1;
     flex-basis: 0;
+    white-space: nowrap;
   `;
 
 
