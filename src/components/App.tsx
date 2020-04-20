@@ -110,10 +110,12 @@ const Component = (
           <div className="button is-full-width" onClick={() => onSubmit()}> 検索 </div>
         </Column>
       </Columns>
+
       <hr />
 
       <Label> 確率下限 </Label>
       <input className="input" type="number" step={0.01} placeholder="Filter" onChange={(e) => onFilterInput(+e.target.value)} value={filterValue}/>
+
       <SegmentHeader onClear={onClear}/>
       {segments.toList().map(x => <SegmentComponent key={x.id} row={x} onDelete={onDelete}/>)}
       <Loading/>
