@@ -77,10 +77,10 @@ const Component = (
   return (
     <div>
       <Label> Api Url </Label>
-      <input className="input is-primary" type="text" placeholder="Backlog Url" onChange={(e) => onUrlInput(e.target.value)} value={url}/>
+      <input className="input" type="text" placeholder="Backlog Url" onChange={(e) => onUrlInput(e.target.value)} value={url}/>
 
       <Label> Token </Label>
-      <input className="input is-primary" type="text" placeholder="Api Key" onChange={(e) => onKeyInput(e.target.value)} value={apiKey}/>
+      <input className="input" type="text" placeholder="Api Key" onChange={(e) => onKeyInput(e.target.value)} value={apiKey}/>
 
       <Label> 通貨ペア </Label>
       <CurrencyPairList/>
