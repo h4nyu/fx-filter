@@ -7,9 +7,12 @@ import moment from "moment";
 
 storiesOf('DayPicker', module)
   .add('default', () => (
-    <Component
-      value={moment()}
-      onChange={action('onChange')}
-    />
+    <>
+      <Component
+        value={moment()}
+        onChange={action('onChange')}
+      />
+      <div> next line </div>
+    </>
   ))
 

@@ -11,6 +11,9 @@ import DayPicker from '~/components/DayPicker';
 import SegmentComponent from './Segment';
 import SegmentHeader from './SegmentHeader';
 
+const Label = styled.div`
+  font-weight: bold;
+`
 interface IProps{
   apiKey: string;
   url: string;
@@ -42,8 +45,7 @@ const Columns = styled.div`
 
 const Column = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
 `;
 
@@ -74,30 +76,44 @@ const Component = (
   } = props;
   return (
     <div>
+      <Label> Api Url </Label>
       <input className="input is-primary" type="text" placeholder="Backlog Url" onChange={(e) => onUrlInput(e.target.value)} value={url}/>
+
+      <Label> Token </Label>
       <input className="input is-primary" type="text" placeholder="Api Key" onChange={(e) => onKeyInput(e.target.value)} value={apiKey}/>
+
+      <Label> 通貨ペア </Label>
       <CurrencyPairList/>
+
+      <Label> 曜日 </Label>
       <WeekDaySelector onChange={onWeekdayChange} value={weekDay} />
       <Columns>
         <Column>
-          <DayPicker value={fromDate} onChange={onFromDateChange}/>
+          <Label> 期間 </Label>
+          <Columns>
+            <Column>
+              <DayPicker value={fromDate} onChange={onFromDateChange}/>
+            </Column>
+            <Column>
+              <i className="fas fa-arrows-alt-h"></i>
+            </Column>
+            <Column>
+              <DayPicker value={toDate} onChange={onToDateChange}/>
+            </Column>
+          </Columns>
         </Column>
         <Column>
-          <i className="fas fa-arrows-alt-h"></i>
-        </Column>
-        <Column>
-          <DayPicker value={toDate} onChange={onToDateChange}/>
-        </Column>
-        <Column>
+          <Label> ローソク足 </Label>
           <GranularitySelector onChange={onGranularityChange} value={granularity} />
         </Column>
         <Column>
-          <input className="input" type="number" step={0.01} placeholder="Filter" onChange={(e) => onFilterInput(+e.target.value)} value={filterValue}/>
-        </Column>
-        <Column>
-          <div className="button" onClick={() => onSubmit()}> 検索 </div>
+          <div className="button is-full-width" onClick={() => onSubmit()}> 検索 </div>
         </Column>
       </Columns>
+      <hr />
+
+      <Label> 確率下限 </Label>
+      <input className="input" type="number" step={0.01} placeholder="Filter" onChange={(e) => onFilterInput(+e.target.value)} value={filterValue}/>
       <SegmentHeader onClear={onClear}/>
       {segments.toList().map(x => <SegmentComponent key={x.id} row={x} onDelete={onDelete}/>)}
       <Loading/>

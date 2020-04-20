@@ -12,6 +12,11 @@ const options = [
   { value: Granularity.M15, label: '15分足' },
   { value: Granularity.M5, label: '5分足' },
 ];
+
+const Layout = styled.div`
+  display: flex;
+  flex-direction: row; 
+`
 const Item = styled.div`
   cursor: pointer;
   margin: 0.5em;
@@ -30,7 +35,7 @@ export interface IProps {
 export default (props: IProps) => {
   const { onChange, value } = props;
   return (
-    <>
+    <Layout>
       {
         options.map(x => {
           return (
@@ -41,6 +46,6 @@ export default (props: IProps) => {
           )
         })
       }
-    </>
+    </Layout>
   );
 };

@@ -33,6 +33,7 @@ export type Segment = {
   toDate: Moment,
   ratio: number,
   count: number,
+  weekDay: WeekDay | null,
 }
 
 export type Segments = Map<string, Segment>;

@@ -91,7 +91,13 @@ export class AppStore {
   }
 
   @action setFilterValue = (value: number) => { 
-    this.filterValue = value
+    if (value < 0){
+      this.filterValue = 0
+    }else if(value > 1){
+      this.filterValue = 1
+    }else{
+      this.filterValue = value
+    }
   }
 
   @action toggleCurrencyPairs = (value: CurrencyPair) => { 
@@ -139,8 +145,8 @@ export class AppStore {
     if(this.weekDay !== null){
       candles = candles.filter(x => this.weekDay === x.time.format('dddd') as WeekDay)
     }
-    const upCount = getUpCount(candles)
     const count = candles.length;
+    const upCount = count > 0 ? getUpCount(candles): 0
     const upRatio = upCount/count;
     const segment:Segment = {
       id: uuid(),
@@ -150,7 +156,8 @@ export class AppStore {
       ratio: upRatio > 0.5 ? upRatio : 1 - upRatio,
       fromDate: this.fromDate,
       toDate:  this.toDate,
-      count: candles.length,
+      count: count,
+      weekDay: this.weekDay,
     }
     this.segments = this.segments.set(segment.id, segment)
     this.segments = this.segments.sortBy(x => - x.ratio)

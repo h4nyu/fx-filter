@@ -15,7 +15,7 @@ const Component = () => {
     fromDate={store.fromDate}
     toDate={store.toDate}
     weekDay={store.weekDay}
-    segments={store.segments}
+    segments={store.filterdSegments}
     onKeyInput={store.setApiKey}
     onUrlInput={store.setUrl}
     onFromDateChange={store.setFromDate}
