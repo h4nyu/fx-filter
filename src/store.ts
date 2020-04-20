@@ -48,7 +48,7 @@ export class AppStore {
   @observable currencyPairs: CurrencyPair[] = [];
   @observable instruments: Instruments = [];
   @observable segments:Segments = Map();
-  @observable weekDays:WeekDay[] = [] ;
+  @observable weekDay:WeekDay | null = null ;
 
   constructor() {
     const apiKey = localStorage.getItem('apiKey');
@@ -103,10 +103,10 @@ export class AppStore {
   }
 
   @action toggleWeekday = (value: WeekDay) => { 
-    if (this.weekDays.includes(value)){
-      this.weekDays = this.weekDays.filter(x => x!== value)
+    if (this.weekDay === value){
+      this.weekDay = null
     }else{
-      this.weekDays = [...this.weekDays, value]
+      this.weekDay = value
     }
   }
 
@@ -136,8 +136,8 @@ export class AppStore {
       this.toDate,
     )
     if (candles === undefined){return}
-    if(this.weekDays.length > 0){
-      candles = candles.filter(x => this.weekDays.includes(x.time.format('dddd') as WeekDay))
+    if(this.weekDay !== null){
+      candles = candles.filter(x => this.weekDay === x.time.format('dddd') as WeekDay)
     }
     const upCount = getUpCount(candles)
     const count = candles.length;

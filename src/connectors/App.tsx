@@ -14,7 +14,7 @@ const Component = () => {
     granularity={store.granularity}
     fromDate={store.fromDate}
     toDate={store.toDate}
-    weekDays={store.weekDays}
+    weekDay={store.weekDay}
     segments={store.segments}
     onKeyInput={store.setApiKey}
     onUrlInput={store.setUrl}

@@ -18,7 +18,7 @@ interface IProps{
   granularity: Granularity;
   fromDate: Moment,
   toDate: Moment,
-  weekDays: WeekDay[],
+  weekDay: WeekDay | null,
   segments: Segments,
   onKeyInput: (value:string) => void;
   onUrlInput: (value:string) => void;
@@ -58,7 +58,7 @@ const Component = (
     toDate,
     segments,
     granularity,
-    weekDays,
+    weekDay,
     onKeyInput, 
     onUrlInput,
     onFromDateChange,
@@ -77,7 +77,7 @@ const Component = (
       <input className="input is-primary" type="text" placeholder="Backlog Url" onChange={(e) => onUrlInput(e.target.value)} value={url}/>
       <input className="input is-primary" type="text" placeholder="Api Key" onChange={(e) => onKeyInput(e.target.value)} value={apiKey}/>
       <CurrencyPairList/>
-      <WeekDaySelector onChange={onWeekdayChange} values={weekDays} />
+      <WeekDaySelector onChange={onWeekdayChange} value={weekDay} />
       <Columns>
         <Column>
           <DayPicker value={fromDate} onChange={onFromDateChange}/>

@@ -31,17 +31,17 @@ const Label = styled.span`
 
 export interface IProps {
   onChange: (value: WeekDay) => void;
-  values: WeekDay[];
+  value: WeekDay | null;
 }
 export default (props: IProps) => {
-  const { onChange, values } = props;
+  const { onChange, value } = props;
   return (
     <Layout className="card">
       {
         options.map(x => {
           return (
             <Item key={x.value} onClick={() => onChange(x.value)}>
-              <Check value={values.includes(x.value)} onClick={()=>{}}/>
+              <Check value={value === x.value} onClick={()=>{}}/>
               <Label>{x.label}</Label>
             </Item>
           )
