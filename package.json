@@ -4,7 +4,7 @@
   "description": "hello world!",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode development --debug --progress",
+    "build": "webpack --mode production --debug --progress",
     "watch": "webpack --mode development --debug --progress --watch",
     "start": "webpack-dev-server",
     "storybook": "start-storybook -c ./.storybook --ci"
