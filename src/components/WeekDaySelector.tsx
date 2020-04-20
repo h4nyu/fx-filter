@@ -36,7 +36,7 @@ export interface IProps {
 export default (props: IProps) => {
   const { onChange, value } = props;
   return (
-    <Layout className="card">
+    <Layout>
       {
         options.map(x => {
           return (
