@@ -4,6 +4,7 @@ import {
   computed,
 } from 'mobx';
 import {sortBy, filter, toNumber, toString} from 'lodash';
+import {pipe, map, join} from 'lodash/fp';
 import {OandaApi} from '~/api';
 import {Instruments, Granularity, CurrencyPair, Segment, Segments, Direction, WeekDay} from '~/entities';
 import { Map } from 'immutable'
@@ -11,6 +12,7 @@ import { getUpCount } from '~/logics';
 import  'moment-business-days'
 import moment, {Moment} from "moment";
 import {v4 as uuid} from 'uuid';
+import { saveAs } from 'file-saver';
 
 class LoadingStore {
   @observable pendingNum = 0;
@@ -161,6 +163,46 @@ export class AppStore {
     }
     this.segments = this.segments.set(segment.id, segment)
     this.segments = this.segments.sortBy(x => - x.ratio)
+  }
+
+   jsonToCsv = (rows: (string|number)[][], columns: string[] = [] ) =>  {
+    const body = pipe(
+      map(join(', ')),
+      join('\n'),
+    )(rows);
+    const header = `${join(', ')(columns)}\n`;
+    return `${header}${body}`;
+  }
+
+  @action outputCsv =  () => {
+    const columns = [
+      '通貨ペア',
+      '方向',
+      '確率',
+      'ローソク足',
+      '開始日',
+      '終了日',
+      '曜日',
+      '件数',
+    ];
+    const fmt = 'YYYY-MM-DD';
+
+    const rows = this.filterdSegments
+      .toList()
+      .map(x => {
+        return [
+          x.currencyPair,
+          x.direction,
+          x.ratio,
+          x.fromDate.format(fmt),
+          x.weekDay,
+          x.count
+        ];
+      });
+    const data = this.jsonToCsv(rows.toJS(), columns);
+    const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+    const blob = new Blob([bom, data], { type: 'text/csv;charset=utf-8' });
+    saveAs(blob, 'fx-filter.csv');
   }
 }
 

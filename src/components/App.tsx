@@ -31,6 +31,7 @@ interface IProps{
   onWeekdayChange: (value:WeekDay) => void;
   onSubmit: () => void;
   onClear: () => void;
+  onDownload: () => void;
   onDelete: (id:string) => void;
   onFilterInput: (value:number) => void;
   CurrencyPairList: React.ComponentType<{}>;
@@ -70,6 +71,7 @@ const Component = (
     onSubmit,
     onClear,
     onDelete,
+    onDownload,
     onFilterInput,
     CurrencyPairList,
     Loading,
@@ -114,6 +116,7 @@ const Component = (
 
       <Label> 確率下限 </Label>
       <input className="input" type="number" step={0.01} placeholder="Filter" onChange={(e) => onFilterInput(+e.target.value)} value={filterValue}/>
+       <i onClick={() => onDownload()} className="button fas fa-file-download is-full-width"/>
       <SegmentHeader onClear={onClear}/>
       {segments.toList().map(x => <SegmentComponent key={x.id} row={x} onDelete={onDelete}/>)}
       <Loading/>

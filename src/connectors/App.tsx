@@ -26,6 +26,7 @@ const Component = () => {
     onSubmit={store.submit}
     onClear={store.clear}
     onDelete={store.delete}
+    onDownload={store.outputCsv}
     CurrencyPairList={CurrencyPairList}
     Loading={Loading}
   />;
