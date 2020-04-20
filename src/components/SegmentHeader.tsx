@@ -30,6 +30,7 @@ export default (props: IProps) => {
       <Column>ローソク足</Column>
       <Column>開始日</Column>
       <Column>終了日</Column>
+      <Column>曜日</Column>
       <Column>件数</Column>
       <Column className="button" onClick={() => onClear()}>全削除</Column>
     </Layout>

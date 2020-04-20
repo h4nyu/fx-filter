@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Segment } from '~/entities';
+import {Segment, WeekDay,weekDayLabels } from '~/entities';
 import CandleList from './CandleList';
 
 enum GranularityLabel {
@@ -9,6 +9,7 @@ enum GranularityLabel {
   H1 = "1時間足",
   D = "日足",
 }
+
 
 const Layout = styled.div`
     display: flex;
@@ -21,6 +22,7 @@ const Column = styled.div`
     display: flex;
     flex-grow: 1;
     flex-basis: 0;
+    white-space: nowrap;
   `;
 
 export interface IProps {
@@ -38,7 +40,7 @@ export default (props: IProps) => {
       <Column>{label}</Column>
       <Column>{row.fromDate.format('YYYY-MM-DD')}</Column>
       <Column>{row.toDate.format('YYYY-MM-DD')}</Column>
-      <Column>{row.weekDay}</Column>
+      <Column>{ row.weekDay === null? "なし": weekDayLabels.get(row.weekDay) }</Column>
       <Column>{row.count}</Column>
       <Column className="button" onClick={() => onDelete(row.id)}>削除</Column>
     </Layout>

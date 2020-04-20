@@ -1,17 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import {WeekDay } from '~/entities';
+import {WeekDay, weekDayLabels } from '~/entities';
 import PullDown from './PullDown'
 import Select from 'react-select';
 import Check from './Check';
 
 
 const options = [
-  { value: WeekDay.Monday, label: '月' },
-  { value: WeekDay.Tuesday, label: '火' },
-  { value: WeekDay.Wednesday, label: '水' },
-  { value: WeekDay.Thursday, label: '木' },
-  { value: WeekDay.Friday, label: '金' },
+  WeekDay.Monday,
+  WeekDay.Tuesday, 
+  WeekDay.Wednesday,
+  WeekDay.Thursday,
+  WeekDay.Friday, 
 ];
 
 const Layout = styled.div`
@@ -38,11 +38,11 @@ export default (props: IProps) => {
   return (
     <Layout className="card">
       {
-        options.map(x => {
+        options.map((x:WeekDay) => {
           return (
-            <Item key={x.value} onClick={() => onChange(x.value)}>
-              <Check value={value === x.value} onClick={()=>{}}/>
-              <Label>{x.label}</Label>
+            <Item key={x} onClick={() => onChange(x)}>
+              <Check value={value === x} onClick={()=>{}}/>
+              <Label>{weekDayLabels.get(x)}</Label>
             </Item>
           )
         })
