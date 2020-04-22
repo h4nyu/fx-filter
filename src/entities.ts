@@ -44,6 +44,7 @@ export enum Granularity {
   M15 = "M15",
   M5 = "M5",
   H1 = "H1",
+  H4 = "H4",
   D = "D",
 }
 
@@ -64,7 +65,7 @@ export enum CurrencyPair {
   NZD_USD = "NZD_USD",
   USD_CAD = "USD_CAD",
   USD_CHF = "USD_CHF",
-  // JPY_USD = "JPY_USD",
+  USD_JPY = "USD_JPY",
 }
 
 export enum Direction {

@@ -9,6 +9,7 @@ import Check from './Check';
 const options = [
   { value: Granularity.D, label: '日足' },
   { value: Granularity.H1, label: '1時間足' },
+  { value: Granularity.H4, label: '4時間足' },
   { value: Granularity.M15, label: '15分足' },
   { value: Granularity.M5, label: '5分足' },
 ];
