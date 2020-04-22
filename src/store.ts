@@ -167,7 +167,6 @@ export class AppStore {
       this.toDate,
       this.weekDay
     )
-    console.log(segments)
     this.segments = this.segments.merge(segments)
     this.segments = this.segments.sortBy(x => - x.timeOfDay).sortBy(x => - x.ratio)
   }
