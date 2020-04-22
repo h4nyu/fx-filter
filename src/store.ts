@@ -168,7 +168,7 @@ export class AppStore {
       this.weekDay
     )
     this.segments = this.segments.merge(segments)
-    this.segments = this.segments.sortBy(x => - x.timeOfDay).sortBy(x => - x.ratio)
+    this.segments = this.segments.sortBy(x => x.timeOfDay).sortBy(x => - x.ratio)
   }
 
    jsonToCsv = (rows: (string|number)[][], columns: string[] = [] ) =>  {
