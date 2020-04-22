@@ -46,7 +46,7 @@ export class AppStore {
   @observable filterValue: number  = 0.75;
   @observable fromDate:Moment = moment().add(-7, 'days');
   @observable toDate:Moment = moment();
-  @observable granularity:Granularity = Granularity.D;
+  @observable granularities:Granularity[] = [Granularity.D];
   @observable currencyPairs: CurrencyPair[] = [];
   @observable instruments: Instruments = [];
   @observable segments:Segments = Map();
@@ -73,9 +73,12 @@ export class AppStore {
     localStorage.setItem('url', value);
   }
 
-  @action setGranularity = (value: Granularity) => { 
-    this.granularity = value
-    localStorage.setItem('granularity', value);
+  @action toggleGranularity = (value: Granularity) => { 
+    if (this.granularities.includes(value)){
+      this.granularities = this.granularities.filter(x => x!== value)
+    }else{
+      this.granularities = [...this.granularities, value]
+    }
   }
 
   @action setToDate = (value: Moment) => { 
@@ -119,8 +122,17 @@ export class AppStore {
   }
 
   @action submit = async () => { 
+    const args:{currencyPair:CurrencyPair, granularity:Granularity}[] = [];
+    this.currencyPairs.forEach(x => {
+      this.granularities.forEach( y => {
+        args.push({
+          currencyPair:x,
+          granularity:y,
+        })
+      })
+    })
     await Promise.all(
-      this.currencyPairs.map(x => loadingStore.dispatch(async () => this.fetchSegment(x)))
+      args.map(x => loadingStore.dispatch(async () => this.fetchSegment(x.currencyPair, x.granularity)))
     )
   }
 
@@ -132,13 +144,13 @@ export class AppStore {
     this.segments = this.segments.delete(id)
   }
 
-  @action fetchSegment = async (currencyPair:CurrencyPair) => { 
+  @action fetchSegment = async (currencyPair:CurrencyPair, granularity:Granularity) => { 
     const api = new OandaApi(
       this.apiKey,
       this.url,
     )
     let candles = await api.getCandels(
-      this.granularity, 
+      granularity, 
       currencyPair,
       this.fromDate,
       this.toDate,
@@ -150,7 +162,7 @@ export class AppStore {
     const segments = getSegments(
       candles,
       currencyPair,
-      this.granularity,
+      granularity,
       this.fromDate,
       this.toDate,
       this.weekDay

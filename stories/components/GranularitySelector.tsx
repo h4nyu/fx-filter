@@ -9,7 +9,7 @@ storiesOf('GranularitySelector', module)
   .add('default', () => (
     <Component 
       onChange={action('onChange')}
-      value={Granularity.D}
+      values={[Granularity.D]}
     />
   ))
 

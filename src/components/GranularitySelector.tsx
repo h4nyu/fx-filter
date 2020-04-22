@@ -31,17 +31,17 @@ const Label = styled.span`
 
 export interface IProps {
   onChange: (value: Granularity) => void;
-  value: Granularity;
+  values: Granularity[];
 }
 export default (props: IProps) => {
-  const { onChange, value } = props;
+  const { onChange, values } = props;
   return (
     <Layout>
       {
         options.map(x => {
           return (
             <Item key={x.value} onClick={() => onChange(x.value)}>
-              <Check value={value===x.value} onClick={()=>{}}/>
+              <Check value={values.includes(x.value)} onClick={()=>{}}/>
               <Label>{x.label}</Label>
             </Item>
           )

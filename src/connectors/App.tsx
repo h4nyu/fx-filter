@@ -11,7 +11,7 @@ const Component = () => {
     apiKey={store.apiKey}
     url={store.url}
     filterValue={store.filterValue}
-    granularity={store.granularity}
+    granularities={store.granularities}
     fromDate={store.fromDate}
     toDate={store.toDate}
     weekDay={store.weekDay}
@@ -20,7 +20,7 @@ const Component = () => {
     onUrlInput={store.setUrl}
     onFromDateChange={store.setFromDate}
     onToDateChange={store.setToDate}
-    onGranularityChange={store.setGranularity}
+    onGranularityChange={store.toggleGranularity}
     onWeekdayChange={store.toggleWeekday}
     onFilterInput={store.setFilterValue}
     onSubmit={store.submit}

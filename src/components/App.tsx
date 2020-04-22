@@ -19,7 +19,7 @@ interface IProps{
   apiKey: string;
   url: string;
   filterValue: number | undefined; 
-  granularity: Granularity;
+  granularities: Granularity[];
   fromDate: Moment,
   toDate: Moment,
   weekDay: WeekDay | null,
@@ -61,7 +61,7 @@ const Component = (
     fromDate,
     toDate,
     segments,
-    granularity,
+    granularities,
     weekDay,
     onKeyInput, 
     onUrlInput,
@@ -96,7 +96,7 @@ const Component = (
       <Columns>
         <Column>
           <Label> ローソク足 </Label>
-          <GranularitySelector onChange={onGranularityChange} value={granularity} />
+          <GranularitySelector onChange={onGranularityChange} values={granularities} />
         </Column>
       </Columns>
       <hr />
