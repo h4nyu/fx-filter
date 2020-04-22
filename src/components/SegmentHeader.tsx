@@ -15,6 +15,7 @@ const Column = styled.div`
     flex-grow: 1;
     flex-basis: 0;
     white-space: nowrap;
+    margin:0.5em;
   `;
 
 
