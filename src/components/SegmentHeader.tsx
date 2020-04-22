@@ -25,6 +25,7 @@ export default (props: IProps) => {
   const { onClear } = props;
   return (
     <Layout className="card">
+      <Column>時刻</Column>
       <Column>通貨ペア</Column>
       <Column>方向</Column>
       <Column>確率</Column>

@@ -15,9 +15,7 @@ export type Candle = {
   mid: {
     c: number,
     h: number,
-    l: number,
-    o: number,
-  },
+    l: number, o: number, },
   time: Moment,
   volume: number,
 };
@@ -34,6 +32,7 @@ export type Segment = {
   ratio: number,
   count: number,
   weekDay: WeekDay | null,
+  timeOfDay: string,
 }
 
 export type Segments = Map<string, Segment>;

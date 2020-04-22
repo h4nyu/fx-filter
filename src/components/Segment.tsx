@@ -35,6 +35,7 @@ export default (props: IProps) => {
   const label = GranularityLabel[row.granularity];
   return (
     <Layout className="card">
+      <Column>{row.timeOfDay}</Column>
       <Column>{row.currencyPair.replace("_", "/")}</Column>
       <Column>{row.direction}</Column>
       <Column>{row.ratio.toFixed(3)}</Column>

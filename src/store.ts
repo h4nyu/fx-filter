@@ -8,7 +8,7 @@ import {pipe, map, join} from 'lodash/fp';
 import {OandaApi} from '~/api';
 import {Instruments, Granularity, CurrencyPair, Segment, Segments, Direction, WeekDay} from '~/entities';
 import { Map } from 'immutable'
-import { getUpCount } from '~/logics';
+import { getUpCount, getSegments } from '~/logics';
 import  'moment-business-days'
 import moment, {Moment} from "moment";
 import {v4 as uuid} from 'uuid';
@@ -147,22 +147,17 @@ export class AppStore {
     if(this.weekDay !== null){
       candles = candles.filter(x => this.weekDay === x.time.format('dddd') as WeekDay)
     }
-    const count = candles.length;
-    const upCount = count > 0 ? getUpCount(candles): 0
-    const upRatio = count > 0 ? upCount/count : 0;
-    const segment:Segment = {
-      id: uuid(),
-      currencyPair: currencyPair,
-      granularity: this.granularity,
-      direction: upRatio > 0.5 ? Direction.High : Direction.Low,
-      ratio: upRatio > 0.5 ? upRatio : 1 - upRatio,
-      fromDate: this.fromDate,
-      toDate:  this.toDate,
-      count: count,
-      weekDay: this.weekDay,
-    }
-    this.segments = this.segments.set(segment.id, segment)
-    this.segments = this.segments.sortBy(x => - x.ratio)
+    const segments = getSegments(
+      candles,
+      currencyPair,
+      this.granularity,
+      this.fromDate,
+      this.toDate,
+      this.weekDay
+    )
+    console.log(segments)
+    this.segments = this.segments.merge(segments)
+    this.segments = this.segments.sortBy(x => - x.timeOfDay).sortBy(x => - x.ratio)
   }
 
    jsonToCsv = (rows: (string|number)[][], columns: string[] = [] ) =>  {
@@ -176,6 +171,7 @@ export class AppStore {
 
   @action outputCsv =  () => {
     const columns = [
+      '時刻',
       '通貨ペア',
       '方向',
       '確率',
@@ -191,6 +187,7 @@ export class AppStore {
       .toList()
       .map(x => {
         return [
+          x.timeOfDay,
           x.currencyPair,
           x.direction,
           x.ratio,

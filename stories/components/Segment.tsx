@@ -18,6 +18,7 @@ storiesOf('Segment', module)
       ratio:0.7,
       count:1000,
       weekDay: null,
+      timeOfDay: "00:00",
     }
     return (<Component
       row={object('row', segment)}
@@ -35,6 +36,7 @@ storiesOf('Segment', module)
       ratio:0.7,
       count:1000,
       weekDay: WeekDay.Monday,
+      timeOfDay: "00:00",
     }
     return (<Component
       row={object('row', segment)}
