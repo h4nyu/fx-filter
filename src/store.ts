@@ -202,6 +202,7 @@ export class AppStore {
           x.currencyPair,
           x.direction,
           x.ratio,
+          x.granularity,
           x.fromDate.format(fmt),
           x.toDate.format(fmt),
           x.weekDay,
